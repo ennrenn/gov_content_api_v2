@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOV.UK Content Monitor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>GOV.UK Content Monitor</h1>
+    <p class="subtitle">
+      Pulls the latest content (up to 1,500 items, newest first) across a watch list of 27
+      taxonomy branches, straight from the GOV.UK Search API — nothing is stored on a server,
+      everything runs in this browser tab.
+    </p>
+  </header>
+
+  <main>
+    <section class="run-panel">
+      <button id="runBtn" type="button">Run pull</button>
+      <pre id="status" class="status"></pre>
+    </section>
+
+    <section class="filters" aria-label="Filter results">
+      <div class="filter-row">
+        <label>
+          Search text
+          <input id="textFilter" type="text" placeholder="Title or description contains...">
+        </label>
+        <label>
+          Department
+          <select id="deptFilter"><option value="">All</option></select>
+        </label>
+        <label>
+          Format
+          <select id="formatFilter"><option value="">All</option></select>
+        </label>
+        <label>
+          Topic contains
+          <input id="topicFilter" type="text" placeholder="e.g. Education">
+        </label>
+      </div>
+      <div class="filter-row">
+        <label>
+          Published from
+          <input id="dateFrom" type="date">
+        </label>
+        <label>
+          Published to
+          <input id="dateTo" type="date">
+        </label>
+        <button id="clearDates" type="button" class="link-button">Clear dates</button>
+        <span id="resultCount" class="result-count"></span>
+      </div>
+    </section>
+
+    <section class="export-panel">
+      <span>Export what's currently shown (respects all filters above, including dates):</span>
+      <button id="exportCsv" type="button">CSV</button>
+      <button id="exportJson" type="button">JSON</button>
+      <button id="exportXlsx" type="button">Excel</button>
+    </section>
+
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Published</th>
+            <th>Format</th>
+            <th>Title &amp; description</th>
+            <th>Department(s)</th>
+            <th>Topic(s)</th>
+          </tr>
+        </thead>
+        <tbody id="results"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data from the public GOV.UK Search and Content APIs. No date range is ever sent to the
+    API itself — a date range you pick here is applied to the results already loaded, in this
+    browser, because the API's own date filter has proven unreliable in testing.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
